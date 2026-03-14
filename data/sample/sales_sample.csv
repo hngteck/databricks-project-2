@@ -1,0 +1,11 @@
+order_id,order_date,customer_id,product_id,product_name,category,quantity,unit_price,discount,region
+ORD-001,2024-01-05,CUST-101,PROD-A1,Widget Alpha,Electronics,2,49.99,0.1,North
+ORD-002,2024-01-07,CUST-102,PROD-B2,Gadget Beta,Electronics,1,149.99,0.0,South
+ORD-003,2024-01-10,CUST-103,PROD-C3,Gizmo Gamma,Home & Garden,4,24.99,0.05,East
+ORD-004,2024-01-12,CUST-101,PROD-D4,Doohickey Delta,Clothing,3,39.99,0.15,North
+ORD-005,2024-01-15,CUST-104,PROD-A1,Widget Alpha,Electronics,1,49.99,0.0,West
+ORD-006,2024-02-02,CUST-105,PROD-E5,Thingamajig Epsilon,Sports,2,79.99,0.1,South
+ORD-007,2024-02-08,CUST-102,PROD-F6,Whatchamacallit Zeta,Home & Garden,5,15.99,0.0,South
+ORD-008,2024-02-14,CUST-106,PROD-B2,Gadget Beta,Electronics,2,149.99,0.2,East
+ORD-009,2024-02-20,CUST-103,PROD-G7,Contraption Eta,Clothing,1,89.99,0.0,East
+ORD-010,2024-03-01,CUST-107,PROD-H8,Device Theta,Sports,3,59.99,0.05,North

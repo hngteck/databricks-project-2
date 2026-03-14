@@ -1,0 +1,16 @@
+pipeline:
+  name: sales_data_pipeline
+  version: "1.0.0"
+
+storage:
+  raw_path: /data/raw
+  processed_path: /data/processed
+  delta_path: /data/delta
+
+spark:
+  app_name: SalesDataPipeline
+  shuffle_partitions: 200
+
+data:
+  date_format: "yyyy-MM-dd"
+  timestamp_format: "yyyy-MM-dd HH:mm:ss"
