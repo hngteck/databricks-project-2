@@ -3,14 +3,14 @@
 # MAGIC # 01 – Data Ingestion
 # MAGIC
 # MAGIC This notebook reads raw sales data from CSV files into a Delta table in the
-# MAGIC **raw** layer of the medallion architecture.
+# MAGIC **bronze** layer of the medallion architecture.
 # MAGIC
 # MAGIC **Inputs**
 # MAGIC - `config/settings.yaml` – pipeline configuration
-# MAGIC - `/data/raw/sales/*.csv` – raw CSV files
+# MAGIC - `bronze_path/csv/sales/*.csv` – raw CSV files
 # MAGIC
 # MAGIC **Outputs**
-# MAGIC - Delta table at the path defined by `storage.raw_path` in the config
+# MAGIC - Delta table at the path defined by `storage.bronze_path` in the config
 
 # COMMAND ----------
 
@@ -30,11 +30,11 @@ from src.utils import log_dataframe_info, validate_not_null, add_ingestion_times
 
 config = load_config("../config/settings.yaml")
 
-RAW_CSV_PATH    = config["storage"]["raw_path"] + "/sales"
-RAW_DELTA_PATH  = config["storage"]["delta_path"] + "/raw/sales"
+BRONZE_CSV_PATH    = config["storage"]["bronze_path"] + "/csv/sales"
+BRONZE_DELTA_PATH  = config["storage"]["bronze_path"] + "/sales"
 
-print(f"Reading CSV from : {RAW_CSV_PATH}")
-print(f"Writing Delta to : {RAW_DELTA_PATH}")
+print(f"Reading CSV from : {BRONZE_CSV_PATH}")
+print(f"Writing Delta to : {BRONZE_DELTA_PATH}")
 
 # COMMAND ----------
 
@@ -43,8 +43,8 @@ print(f"Writing Delta to : {RAW_DELTA_PATH}")
 
 # COMMAND ----------
 
-df_raw = read_csv(spark, RAW_CSV_PATH)
-log_dataframe_info(df_raw, "raw_csv")
+df_raw = read_csv(spark, BRONZE_CSV_PATH)
+log_dataframe_info(df_raw, "bronze_csv")
 
 # COMMAND ----------
 
@@ -69,9 +69,9 @@ df_with_meta = add_ingestion_timestamp(df_validated)
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 5. Write to Delta (Raw Layer)
+# MAGIC ## 5. Write to Delta (Bronze Layer)
 
 # COMMAND ----------
 
-write_delta(df_with_meta, RAW_DELTA_PATH, mode="overwrite")
-print(f"Successfully wrote raw Delta table to {RAW_DELTA_PATH}")
+write_delta(df_with_meta, BRONZE_DELTA_PATH, mode="overwrite")
+print(f"Successfully wrote bronze Delta table to {BRONZE_DELTA_PATH}")

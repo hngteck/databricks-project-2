@@ -11,9 +11,9 @@ DEFAULT_CONFIG = {
         "version": "1.0.0",
     },
     "storage": {
-        "raw_path": "/data/raw",
-        "processed_path": "/data/processed",
-        "delta_path": "/data/delta",
+        "bronze_path": "/data/bronze",
+        "silver_path": "/data/silver",
+        "gold_path": "/data/gold",
     },
     "spark": {
         "app_name": "SalesDataPipeline",

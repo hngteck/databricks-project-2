@@ -23,17 +23,17 @@ from src.utils import log_dataframe_info
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 1. Load Configuration & Read Processed Data
+# MAGIC ## 1. Load Configuration & Read Silver Data
 
 # COMMAND ----------
 
 config = load_config("../config/settings.yaml")
 
-PROCESSED_SALES_PATH = config["storage"]["delta_path"] + "/processed/sales"
-BY_CATEGORY_PATH     = config["storage"]["delta_path"] + "/processed/sales_by_category"
-BY_REGION_PATH       = config["storage"]["delta_path"] + "/processed/sales_by_region"
+SILVER_SALES_PATH = config["storage"]["silver_path"] + "/sales"
+BY_CATEGORY_PATH  = config["storage"]["silver_path"] + "/sales_by_category"
+BY_REGION_PATH    = config["storage"]["silver_path"] + "/sales_by_region"
 
-df_sales      = read_delta(spark, PROCESSED_SALES_PATH)
+df_sales      = read_delta(spark, SILVER_SALES_PATH)
 df_category   = read_delta(spark, BY_CATEGORY_PATH)
 df_region     = read_delta(spark, BY_REGION_PATH)
 
