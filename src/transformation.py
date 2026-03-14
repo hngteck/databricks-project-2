@@ -14,7 +14,7 @@ def cast_and_clean(df: DataFrame) -> DataFrame:
     - Drops rows where ``quantity`` or ``unit_price`` is non-positive.
 
     Args:
-        df: Raw ingested DataFrame.
+        df: Bronze layer ingested DataFrame.
 
     Returns:
         Cleaned DataFrame.

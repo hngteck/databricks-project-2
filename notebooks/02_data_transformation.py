@@ -2,16 +2,16 @@
 # MAGIC %md
 # MAGIC # 02 – Data Transformation
 # MAGIC
-# MAGIC This notebook reads from the raw Delta layer, applies cleaning and enrichment
-# MAGIC transformations, and writes the results to the **processed** (silver) layer.
+# MAGIC This notebook reads from the bronze Delta layer, applies cleaning and enrichment
+# MAGIC transformations, and writes the results to the **silver** layer.
 # MAGIC
 # MAGIC **Inputs**
-# MAGIC - Delta table at `storage.delta_path/raw/sales`
+# MAGIC - Delta table at `storage.bronze_path/sales`
 # MAGIC
 # MAGIC **Outputs**
-# MAGIC - Cleaned and enriched Delta table at `storage.delta_path/processed/sales`
-# MAGIC - Category-level aggregation at `storage.delta_path/processed/sales_by_category`
-# MAGIC - Region-level aggregation at `storage.delta_path/processed/sales_by_region`
+# MAGIC - Cleaned and enriched Delta table at `storage.silver_path/sales`
+# MAGIC - Category-level aggregation at `storage.silver_path/sales_by_category`
+# MAGIC - Region-level aggregation at `storage.silver_path/sales_by_region`
 
 # COMMAND ----------
 
@@ -38,20 +38,20 @@ from src.utils import deduplicate, log_dataframe_info
 
 config = load_config("../config/settings.yaml")
 
-RAW_DELTA_PATH        = config["storage"]["delta_path"] + "/raw/sales"
-PROCESSED_SALES_PATH  = config["storage"]["delta_path"] + "/processed/sales"
-BY_CATEGORY_PATH      = config["storage"]["delta_path"] + "/processed/sales_by_category"
-BY_REGION_PATH        = config["storage"]["delta_path"] + "/processed/sales_by_region"
+BRONZE_DELTA_PATH   = config["storage"]["bronze_path"] + "/sales"
+SILVER_SALES_PATH   = config["storage"]["silver_path"] + "/sales"
+BY_CATEGORY_PATH    = config["storage"]["silver_path"] + "/sales_by_category"
+BY_REGION_PATH      = config["storage"]["silver_path"] + "/sales_by_region"
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 2. Read Raw Delta Data
+# MAGIC ## 2. Read Bronze Delta Data
 
 # COMMAND ----------
 
-df_raw = read_delta(spark, RAW_DELTA_PATH)
-log_dataframe_info(df_raw, "raw_delta")
+df_raw = read_delta(spark, BRONZE_DELTA_PATH)
+log_dataframe_info(df_raw, "bronze_delta")
 
 # COMMAND ----------
 
@@ -70,12 +70,12 @@ log_dataframe_info(df_enriched, "enriched")
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 4. Write Processed Sales (partitioned by year / month)
+# MAGIC ## 4. Write Silver Sales (partitioned by year / month)
 
 # COMMAND ----------
 
-write_delta_partitioned(df_enriched, PROCESSED_SALES_PATH, ["year", "month"], mode="overwrite")
-print(f"Processed sales written to {PROCESSED_SALES_PATH}")
+write_delta_partitioned(df_enriched, SILVER_SALES_PATH, ["year", "month"], mode="overwrite")
+print(f"Silver sales written to {SILVER_SALES_PATH}")
 
 # COMMAND ----------
 
